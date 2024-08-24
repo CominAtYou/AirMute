@@ -102,11 +102,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         
         if !NSRunningApplication.runningApplications(withBundleIdentifier: "com.hnc.Discord").isEmpty {
-            do {
-                try rpc.connect()
-            }
-            catch {
-                statusItem.title = "Inactive — Can't Connect to Dicord"
+            Task {
+                do {
+                    try rpc.connect()
+                }
+                catch {
+                    statusItem.title = "Inactive — Can't Connect to Dicord"
+                }
             }
         }
     }
