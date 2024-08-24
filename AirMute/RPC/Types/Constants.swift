@@ -106,6 +106,19 @@ public enum EventType: String, Codable {
     case activityJoinRequest   = "ACTIVITY_JOIN_REQUEST"
 }
 
+public enum VoiceState: String, Codable {
+    case disconnected          = "DISCONNECTED"
+    case awaitingEndpoint      = "AWAITING_ENDPOINT"
+    case authenticating        = "AUTHENTICATING"
+    case tcpConnecting         = "CONNECTING"
+    case tcpConnected          = "CONNECTED"
+    case voiceDisconnected     = "VOICE_DISCONNECTED"
+    case voiceConnecting       = "VOICE_CONNECTING"
+    case voiceConnected        = "VOICE_CONNECTED"
+    case noRoute               = "NO_ROUTE"
+    case iceChecking           = "ICE_CHECKING"
+}
+
 // See https://github.com/discord/discord-api-docs/blob/55cd3d71082e9dc31cbd007a6e74b1cd6a82beeb/docs/resources/User.md#user-flags
 public enum UserFlag: Int, Codable {
     case none                      = 0
