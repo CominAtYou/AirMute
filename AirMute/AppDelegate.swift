@@ -13,6 +13,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     var rpc: RPC?
     
+    let windowDelegate = PreferencesWindowDelegate()
+    
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         makeMenu()
         
@@ -112,13 +114,23 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @objc func launchPreferences() {
         let storyboard = NSStoryboard(name: "Main", bundle: nil)
         if let viewController = storyboard.instantiateController(withIdentifier: "PreferencesViewController") as? ViewController {
+            if (windowDelegate.isOpen) {
+                NSApp.keyWindow?.orderFront(self)
+                NSApp.activate()
+                return
+            }
+            
             let window = NSWindow(contentViewController: viewController)
             
             window.styleMask = [.titled, .closable, .miniaturizable]
             window.title = "AirMute — Settings"
             
+            
+            window.delegate = windowDelegate
+            
             let controller = NSWindowController(window: window)
             controller.showWindow(self)
+            windowDelegate.isOpen = true
             controller.window?.makeKeyAndOrderFront(self)
             NSApp.activate()
         }

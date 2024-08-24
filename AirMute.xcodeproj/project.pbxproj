@@ -46,6 +46,7 @@
 		3E9ED3462C78F18B00FB4370 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9ED3452C78F18B00FB4370 /* AppDelegate.swift */; };
 		3E9ED3482C78F18B00FB4370 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9ED3472C78F18B00FB4370 /* ViewController.swift */; };
 		3E9ED34A2C78F18C00FB4370 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E9ED3492C78F18C00FB4370 /* Assets.xcassets */; };
+		3EAC48582C7A92AF00B03795 /* PreferencesWindowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAC48572C7A92AF00B03795 /* PreferencesWindowDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -90,6 +91,7 @@
 		3E9ED3472C78F18B00FB4370 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		3E9ED3492C78F18C00FB4370 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3E9ED34E2C78F18C00FB4370 /* AirMute.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AirMute.entitlements; sourceTree = "<group>"; };
+		3EAC48572C7A92AF00B03795 /* PreferencesWindowDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindowDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,7 @@
 			children = (
 				3E1855BF2C78FC42001861B4 /* ResponseGetVoiceSettings.swift */,
 				3E2AE76A2C7A2C540003D244 /* EventVoiceConnectionStatus.swift */,
+				3EAC48572C7A92AF00B03795 /* PreferencesWindowDelegate.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -324,6 +327,7 @@
 				3E45C9EA2C7942A3000750ED /* AudioInputController.swift in Sources */,
 				3E1D919D2C79225E00331448 /* CommandError.swift in Sources */,
 				3E1D916C2C7919E100331448 /* RPCError.swift in Sources */,
+				3EAC48582C7A92AF00B03795 /* PreferencesWindowDelegate.swift in Sources */,
 				3E1D91692C79160300331448 /* Constants.swift in Sources */,
 				3E1D91A32C79384700331448 /* Commands.swift in Sources */,
 				3E45C9EF2C7993A5000750ED /* AuthenticationController.swift in Sources */,
