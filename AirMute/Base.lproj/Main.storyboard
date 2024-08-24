@@ -57,12 +57,6 @@
                                                 <action selector="paste:" target="Ady-hI-5gd" id="H2K-Su-o4I"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Paste and Match Style" keyEquivalent="V" id="shv-7v-aFI">
-                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
-                                            <connections>
-                                                <action selector="pasteAsPlainText:" target="Ady-hI-5gd" id="8EK-NU-pva"/>
-                                            </connections>
-                                        </menuItem>
                                         <menuItem title="Delete" id="W12-XS-QbU">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
@@ -158,7 +152,7 @@
                             <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1H2-kl-1JI">
                                 <rect key="frame" x="171" y="198" width="199" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="2fX-k5-F9E">
+                                <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="2fX-k5-F9E">
                                     <font key="font" usesAppearanceFont="YES"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -177,9 +171,9 @@
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UkC-R3-qQ9">
-                                <rect key="frame" x="169" y="150" width="201" height="41"/>
+                                <rect key="frame" x="169" y="132" width="201" height="23"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="check" title="Undeafen when clicking stem while deafened" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="JYs-NY-Rmi">
+                                <buttonCell key="cell" type="check" title="Click stem to undeafen" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="JYs-NY-Rmi">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -187,7 +181,7 @@
                             <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="beM-fZ-e23">
                                 <rect key="frame" x="171" y="229" width="199" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="Ec7-au-9gy">
+                                <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="Ec7-au-9gy">
                                     <font key="font" usesAppearanceFont="YES"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -196,12 +190,32 @@
                                     </allowedInputSourceLocales>
                                 </textFieldCell>
                             </textField>
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jzr-y5-num">
+                                <rect key="frame" x="169" y="162" width="203" height="28"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" title="You can obtain a Client ID and secret from the Discord Developer Portal." id="5ZT-59-ieS">
+                                    <font key="font" metaFont="smallSystem"/>
+                                    <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3aD-lF-aMX">
+                                <rect key="frame" x="169" y="103" width="203" height="28"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" title="When deafened, clicking the stem will undeafen and unmute you." id="6wV-vK-hVN">
+                                    <font key="font" metaFont="smallSystem"/>
+                                    <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                     </view>
                     <connections>
                         <outlet property="clientIdTextField" destination="beM-fZ-e23" id="C8q-ue-EgM"/>
                         <outlet property="clientSecretTextField" destination="1H2-kl-1JI" id="fpT-Mn-ehW"/>
+                        <outlet property="textFieldDescription" destination="jzr-y5-num" id="lrM-wQ-sgY"/>
                         <outlet property="undeafenOnClickCheckbox" destination="UkC-R3-qQ9" id="K8L-Ah-fca"/>
+                        <outlet property="undeafenOnClickDescriptionLabel" destination="3aD-lF-aMX" id="xSU-0N-6cU"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
