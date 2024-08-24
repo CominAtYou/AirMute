@@ -4,12 +4,14 @@ import Combine
 
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
-    private var controller: AudioInputController?
-    private var cancellable: AnyCancellable?
-    private var clientInitiatedAction = false
+    var controller = AudioInputController()!
+    var cancellable: AnyCancellable?
+    var clientInitiatedAction = false
     
-    private var statusBarMenuItem: NSStatusItem!
-    private var statusItem: NSMenuItem!
+    var statusBarMenuItem: NSStatusItem!
+    var statusItem: NSMenuItem!
+    
+    var rpc: RPC?
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         makeMenu()
@@ -22,70 +24,89 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         
         let rpc = RPC(clientId: clientId!, clientSecret: clientSecret!)
+        self.rpc = rpc
         
         rpc.onConnect { rpcParam, event in
             do {
-                let authentication = try rpc.authenticateOverRPC()
+                let authentication = try rpcParam.authenticateOverRPC()
                 
                 NSLog("Connected to @\(authentication.data.user.username)!")
                 
                 self.statusItem.title = "Inactive — Not in Voice"
                 
-                _ = try rpc.subscribe(event: .voiceConnectionStatus)
-                _ = try rpc.subscribe(event: .voiceSettingsUpdate)
+                _ = try rpcParam.subscribe(event: .voiceConnectionStatus)
+                _ = try rpcParam.subscribe(event: .voiceSettingsUpdate)
                 
-                try! AVAudioApplication.shared.setInputMuteStateChangeHandler { isMuted in
-                    if self.clientInitiatedAction {
-                        self.clientInitiatedAction = false
-                        return true
-                    }
-                    
-                    guard let voiceSettings = try? rpcParam.getVoiceSettings() else { return false }
-                    
-                    if voiceSettings.data.deaf {
-                        if isMuted { return true }
-                        
-                        if !UserDefaults.standard.bool(forKey: "disable_click_to_undeafen") {
-                            do {
-                                try rpcParam.setMicMuted(isMuted)
-                                return true
-                            }
-                            catch { return false }
-                        }
-                        else { return false }
-                    }
-                    
-                    do {
-                        try rpcParam.setMicMuted(isMuted)
-                        return true
-                    }
-                    catch { return false }
-                }
+                try self.initMuteStateHandler(rpcParam)
                 
                 self.cancellable = NotificationCenter.default.publisher(for: AVAudioApplication.inputMuteStateChangeNotification)
                     .sink { notification in
                         // pass
                     }
-                
-                
-                self.controller = AudioInputController()!
-                self.controller!.start()
             }
             catch {
                 NSLog(String(describing: error))
             }
         }
 
-        rpc.onEvent { rpc, eventType, event in
+        rpc.onEvent { rpcParam, eventType, event in
             if eventType == .voiceSettingsUpdate {
                 if let responseSvc = try? ResponseGetVoiceSettings.from(data: event) {
                     self.clientInitiatedAction = true
                     try? AVAudioApplication.shared.setInputMuted(responseSvc.data.deaf || responseSvc.data.mute)
                 }
             }
+            else if eventType == .voiceConnectionStatus {
+                if let eventData = try? EventVoiceConnectionStatus.from(data: event) {
+                    if eventData.data.state == .disconnected {
+                        self.statusItem.title = "Inactive — Not in Voice"
+                        self.controller.stop()
+                    }
+                    else {
+                        self.statusItem.title = "Active — In Voice"
+                        self.controller.start()
+                    }
+                }
+            }
         }
         
-        try! rpc.connect()
+        NSWorkspace.shared.notificationCenter.addObserver(forName: NSWorkspace.didLaunchApplicationNotification, object: nil, queue: nil) { notif in
+            if let app = notif.userInfo?[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication {
+                if app.bundleIdentifier == "com.hnc.Discord" {
+                    Task {
+                        self.statusItem.title = "Trying to connect..."
+                        while (true) {
+                            do {
+                                try rpc.connect()
+                                break
+                            }
+                            catch {
+                                try? await Task.sleep(nanoseconds: 5_000_000_000)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        NSWorkspace.shared.notificationCenter.addObserver(forName: NSWorkspace.didTerminateApplicationNotification, object: nil, queue: nil) { notif in
+            if let app = notif.userInfo?[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication {
+                if app.bundleIdentifier == "com.hnc.Discord" {
+                    self.statusItem.title = "Inactive — Discord Not Open"
+                    self.controller.stop()
+                    self.rpc?.closeSocket()
+                }
+            }
+        }
+        
+        if !NSRunningApplication.runningApplications(withBundleIdentifier: "com.hnc.Discord").isEmpty {
+            do {
+                try rpc.connect()
+            }
+            catch {
+                statusItem.title = "Inactive — Can't Connect to Dicord"
+            }
+        }
     }
     
     @objc func launchPreferences() {
@@ -93,19 +114,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if let viewController = storyboard.instantiateController(withIdentifier: "PreferencesViewController") as? ViewController {
             let window = NSWindow(contentViewController: viewController)
             
-            window.makeKeyAndOrderFront(self)
             window.styleMask = [.titled, .closable, .miniaturizable]
             window.title = "AirMute — Settings"
             
             let controller = NSWindowController(window: window)
             controller.showWindow(self)
-            NSApp.activate()
             controller.window?.makeKeyAndOrderFront(self)
+            NSApp.activate()
         }
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
-        // Insert code here to tear down your application
+        rpc?.closeSocket()
     }
     
     func makeMenu() {
@@ -122,7 +142,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         let image = NSImage(systemSymbolName: "person.wave.2.fill", accessibilityDescription: nil)!
             .withSymbolConfiguration(
-                NSImage.SymbolConfiguration(textStyle: .body, scale: .medium).applying(.init(pointSize: 14, weight: .semibold))
+                .preferringHierarchical().applying(.init(textStyle: .body, scale: .medium).applying(.init(pointSize: 14, weight: .semibold)))
             )!
                 
         image.size = NSSize(width: 24.0, height: 24.0)
