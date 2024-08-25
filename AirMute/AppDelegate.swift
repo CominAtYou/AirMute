@@ -137,7 +137,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             NSApp.activate()
         }
     }
-
+    
+    
+    @IBAction func menuItemClicked(_ sender: NSMenuItem) {
+        if (sender.tag == 1) {
+            NSWorkspace.shared.open(URL(string: "https://www.youtube.com/watch?v=FtutLA63Cp8")!)
+        }
+    }
+    
+    
     func applicationWillTerminate(_ aNotification: Notification) {
         rpc?.closeSocket()
     }

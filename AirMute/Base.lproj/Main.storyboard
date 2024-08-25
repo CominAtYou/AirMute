@@ -80,23 +80,16 @@
                                                 <action selector="performMiniaturize:" target="Ady-hI-5gd" id="7ft-3t-VU0"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="Fdj-az-1dm"/>
-                                        <menuItem title="Bring All to Front" id="EDd-Fn-O5J">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        <menuItem title="Close" keyEquivalent="w" id="2D6-RW-ltG">
                                             <connections>
-                                                <action selector="arrangeInFront:" target="Ady-hI-5gd" id="CoR-V9-RDb"/>
+                                                <action selector="performClose:" target="Ady-hI-5gd" id="6ft-8n-7XS"/>
                                             </connections>
                                         </menuItem>
-                                    </items>
-                                </menu>
-                            </menuItem>
-                            <menuItem title="Help" id="ACq-rN-XkL">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Help" systemMenu="help" id="0i6-5Y-z0y">
-                                    <items>
-                                        <menuItem title="AirMute Help" keyEquivalent="?" id="eHd-NW-3vo">
+                                        <menuItem isSeparatorItem="YES" id="VcZ-tS-67B"/>
+                                        <menuItem title="Bad Apple" tag="1" keyEquivalent="B" id="Z9g-DB-rcE">
+                                            <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
                                             <connections>
-                                                <action selector="showHelp:" target="Ady-hI-5gd" id="P8b-to-bHz"/>
+                                                <action selector="menuItemClicked:" target="Voe-Tx-rLC" id="fJy-IB-BGn"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -140,7 +133,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OfP-yj-qJL">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OfP-yj-qJL">
                                 <rect key="frame" x="105" y="232" width="60" height="16"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Client ID:" id="xkg-fR-krz">
@@ -149,7 +142,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1H2-kl-1JI">
+                            <textField verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1H2-kl-1JI">
                                 <rect key="frame" x="171" y="198" width="199" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="2fX-k5-F9E">
@@ -161,7 +154,7 @@
                                     </allowedInputSourceLocales>
                                 </textFieldCell>
                             </textField>
-                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bb4-4W-JGh">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bb4-4W-JGh">
                                 <rect key="frame" x="79" y="201" width="86" height="16"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Client Secret:" id="gk1-yn-iMf">
@@ -178,7 +171,7 @@
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                             </button>
-                            <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="beM-fZ-e23">
+                            <textField verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="beM-fZ-e23">
                                 <rect key="frame" x="171" y="229" width="199" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="Ec7-au-9gy">
@@ -190,7 +183,7 @@
                                     </allowedInputSourceLocales>
                                 </textFieldCell>
                             </textField>
-                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jzr-y5-num">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jzr-y5-num">
                                 <rect key="frame" x="169" y="162" width="203" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" title="You can obtain a Client ID and secret from the Discord Developer Portal." id="5ZT-59-ieS">
@@ -199,7 +192,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3aD-lF-aMX">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3aD-lF-aMX">
                                 <rect key="frame" x="169" y="103" width="203" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" title="When deafened, clicking the stem will undeafen and unmute you." id="6wV-vK-hVN">
