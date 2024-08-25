@@ -27,56 +27,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         let rpc = RPC(clientId: clientId!, clientSecret: clientSecret!)
         self.rpc = rpc
-        
-        rpc.onConnect { rpcParam, event in
-            do {
-                let authentication = try rpcParam.authenticateOverRPC()
-                
-                NSLog("Connected to @\(authentication.data.user.username)!")
-                
-                self.statusItem.title = "Inactive — Not in Voice"
-                
-                _ = try rpcParam.subscribe(event: .voiceConnectionStatus)
-                _ = try rpcParam.subscribe(event: .voiceSettingsUpdate)
-                
-                try self.initMuteStateHandler(rpcParam)
-                
-                self.cancellable = NotificationCenter.default.publisher(for: AVAudioApplication.inputMuteStateChangeNotification)
-                    .sink { notification in
-                        // pass
-                    }
-            }
-            catch {
-                NSLog(String(describing: error))
-            }
-        }
 
-        rpc.onEvent { rpcParam, eventType, event in
-            if eventType == .voiceSettingsUpdate {
-                if let responseSvc = try? ResponseGetVoiceSettings.from(data: event) {
-                    self.clientInitiatedAction = true
-                    try? AVAudioApplication.shared.setInputMuted(responseSvc.data.deaf || responseSvc.data.mute)
-                }
-            }
-            else if eventType == .voiceConnectionStatus {
-                if let eventData = try? EventVoiceConnectionStatus.from(data: event) {
-                    if eventData.data.state == .disconnected {
-                        self.statusItem.title = "Inactive — Not in Voice"
-                        self.controller.stop()
-                    }
-                    else {
-                        self.statusItem.title = "Active — In Voice"
-                        self.controller.start()
-                    }
-                }
-            }
-        }
+        setUpRPCEvents(rpc)
         
         NSWorkspace.shared.notificationCenter.addObserver(forName: NSWorkspace.didLaunchApplicationNotification, object: nil, queue: nil) { notif in
             if let app = notif.userInfo?[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication {
                 if app.bundleIdentifier == "com.hnc.Discord" {
+                    self.statusItem.title = "Trying to connect..."
                     Task {
-                        self.statusItem.title = "Trying to connect..."
                         while (true) {
                             do {
                                 try rpc.connect()
@@ -102,12 +60,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         
         if !NSRunningApplication.runningApplications(withBundleIdentifier: "com.hnc.Discord").isEmpty {
+            self.statusItem.title = "Trying to connect..."
             Task {
                 do {
                     try rpc.connect()
                 }
                 catch {
-                    statusItem.title = "Inactive — Can't Connect to Dicord"
+                    DispatchQueue.main.async {
+                        self.statusItem.title = "Inactive — Can't Connect to Dicord"
+                    }
+                    logger.log("Couldn't establish connection: \(String(describing: error))")
                 }
             }
         }

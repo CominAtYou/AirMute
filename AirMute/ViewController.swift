@@ -1,7 +1,7 @@
 import Cocoa
 
 class ViewController: NSViewController, NSTextFieldDelegate {
-    @IBOutlet weak var clientIdTextField: NSTextField!
+    @IBOutlet weak var clientIdTextField: NumericTextField!
     @IBOutlet weak var clientSecretTextField: NSTextField!
     @IBOutlet weak var textFieldDescription: NSTextField!
     @IBOutlet weak var undeafenOnClickCheckbox: NSButton!
