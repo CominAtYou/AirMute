@@ -83,8 +83,6 @@ extension AppDelegate {
                     self.statusItem.title = "Error — Invalid Client ID"
                 case .invalidOrigin:
                     self.statusItem.title = "Error — Invalid RPC Origin"
-                case .tokenRevoked:
-                    self.statusItem.title = "Error — Invalid Token"
                 case .socketDisconnected:
                     break
                 default:
