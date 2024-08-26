@@ -24,6 +24,7 @@ https://gist.github.com/user-attachments/assets/f0c74cca-f60f-4415-9f00-cb6a0c23
 4. Click OAuth2 in the sidebar. Copy your client ID and client secret.
 5. Add a redirect URI to `http://localhost`.
 6. Launch the app, and click its menu bar icon (it looks like a person with waves) and select "Settings".
+    - If you don't see the settings wndow, it might be behind other windows.
 7. Paste your client ID and secret into this window. Then, close the window.
 8. Quit the app by clicking its menu bar icon and selecting "Quit".
 9. Open Discord if it isn't already open.
@@ -45,6 +46,9 @@ Clicking the app's menu bar icon will yield a menu that'll tell you if the app i
 
 ### What does "Click stem to undeafen" in the app's settings do?
 Enabling this setting will let you undeafen yourself by clicking the stem on your AirPods whilst deafened. Turning it off will prevent you from being undeafened when clicking the stem, but it won't unmute you either.
+
+### The settings window doesn't show up.
+The settings window sometimes like to show up behind other windows. Minimize all of the windows you've got open to locate it, or use Mission Control to find it.
 
 ## Something not working?
 ### Check the status menu first!
