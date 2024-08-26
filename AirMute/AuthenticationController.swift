@@ -2,13 +2,13 @@ import Foundation
 
 extension RPC {
     func authenticateOverRPC() throws -> ResponseAuthenticate {
-//        if let tokenExiry = UserDefaults.standard.object(forKey: "token_expiry") as? Date, tokenExiry > Date() {
-//            if let accessTokenData = UserDefaults.standard.data(forKey: "access_token") {
-//                NSLog("Loaded cached credentials")
-//                let accessToken = try AccessToken.from(data: accessTokenData)
-//                return try authenticate(accessToken: accessToken.accessToken)
-//            }
-//        }
+        if let tokenExiry = UserDefaults.standard.object(forKey: "token_expiry") as? Date, tokenExiry > Date() {
+            if let accessTokenData = UserDefaults.standard.data(forKey: "access_token") {
+                NSLog("Loaded cached credentials")
+                let accessToken = try AccessToken.from(data: accessTokenData)
+                return try authenticate(accessToken: accessToken.accessToken)
+            }
+        }
         
         NSLog("Credentials expired, reauthenticating...")
         
