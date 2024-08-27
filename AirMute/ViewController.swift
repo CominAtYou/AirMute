@@ -6,6 +6,7 @@ class ViewController: NSViewController, NSTextFieldDelegate {
     @IBOutlet weak var textFieldDescription: NSTextField!
     @IBOutlet weak var undeafenOnClickCheckbox: NSButton!
     @IBOutlet weak var undeafenOnClickDescriptionLabel: NSTextField!
+    @IBOutlet weak var versionLabel: NSTextField!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +21,8 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         undeafenOnClickDescriptionLabel.stringValue = !UserDefaults.standard.bool(forKey: "disable_click_to_undeafen") ? "When deafened, clicking the stem will undeafen and unmute you." : "When deafened, clicking the stem will not do anything."
         
         undeafenOnClickCheckbox.action = #selector(checkboxStateChanged)
+        
+        versionLabel.stringValue = "AirMute v\(Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String) (\(Bundle.main.infoDictionary!["CFBundleVersion"] as! String))"
     }
     
     func controlTextDidEndEditing(_ obj: Notification) {

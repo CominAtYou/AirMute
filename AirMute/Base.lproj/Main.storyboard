@@ -210,6 +210,15 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UIz-pI-jKW">
+                                <rect key="frame" x="134" y="14" width="213" height="14"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="AirMute" id="Imc-96-Giz">
+                                    <font key="font" metaFont="system" size="11"/>
+                                    <color key="textColor" name="tertiaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                     </view>
                     <connections>
@@ -218,6 +227,7 @@
                         <outlet property="textFieldDescription" destination="jzr-y5-num" id="lrM-wQ-sgY"/>
                         <outlet property="undeafenOnClickCheckbox" destination="UkC-R3-qQ9" id="K8L-Ah-fca"/>
                         <outlet property="undeafenOnClickDescriptionLabel" destination="3aD-lF-aMX" id="xSU-0N-6cU"/>
+                        <outlet property="versionLabel" destination="UIz-pI-jKW" id="bNd-8r-6Uo"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
