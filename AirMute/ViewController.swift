@@ -22,7 +22,7 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         
         undeafenOnClickCheckbox.action = #selector(checkboxStateChanged)
         
-        versionLabel.stringValue = "AirMute v\(Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String) (\(Bundle.main.infoDictionary!["CFBundleVersion"] as! String))"
+        versionLabel.stringValue = "AirMute \(Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String) (\(Bundle.main.infoDictionary!["CFBundleVersion"] as! String))"
     }
     
     func controlTextDidEndEditing(_ obj: Notification) {
