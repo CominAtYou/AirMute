@@ -47,6 +47,9 @@ Clicking the app's menu bar icon will yield a menu that'll tell you if the app i
 ### What does "Click stem to undeafen" in the app's settings do?
 Enabling this setting will let you undeafen yourself by clicking the stem on your AirPods whilst deafened. Turning it off will prevent you from being undeafened when clicking the stem, but it won't unmute you either.
 
+### Why do I sometimes have to re-authorize the app in Discord?
+Discord requires apps that haven't been approved to re-request authorization from you every seven days. There's nothing that can be done about this, unfortunately. Sorry!
+
 ### The settings window doesn't show up.
 The settings window sometimes like to show up behind other windows. Minimize all of the windows you've got open to locate it, or use Mission Control to find it.
 
