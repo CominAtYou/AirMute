@@ -50,17 +50,13 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         }
     }
     
+    @IBAction func onHelpButtonClicked(_ sender: NSButton) {
+        NSWorkspace.shared.open(URL(string: "https://github.com/CominAtYou/AirMute/tree/master?tab=readme-ov-file#something-not-working")!)
+    }
+    
     override func viewWillDisappear() {
         UserDefaults.standard.setValue(clientIdTextField.stringValue, forKey: "client_id")
         UserDefaults.standard.setValue(clientSecretTextField.stringValue, forKey: "client_secret")
     }
-
-    override var representedObject: Any? {
-        didSet {
-        // Update the view, if already loaded.
-        }
-    }
-
-
 }
 
