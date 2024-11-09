@@ -1,12 +1,17 @@
 import Cocoa
 import AVFAudio
 import Combine
+import AVFoundation
 
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
-    var controller = AudioInputController()!
+    var controller: AudioInputController?
     var cancellable: AnyCancellable?
     var clientInitiatedAction = false
+    var isMicrophoneConnected = false
+    
+    /// This exists as a secondary buffer for status text that isn't the "no microphone connected" text, as that must be displayed over all other text.
+    var statusItemTitle = "Inactive — Discord Not Open"
     
     var statusBarMenuItem: NSStatusItem!
     var statusItem: NSMenuItem!
@@ -21,8 +26,27 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let clientId = UserDefaults.standard.string(forKey: "client_id")
         let clientSecret = UserDefaults.standard.string(forKey: "client_secret")
         
+        Task {
+            while true {
+                if !isMicrophoneConnected && self.statusItem.title != "Inactive — No Microphone Connected" {
+                    self.statusItem.title = "Inactive — No Microphone Connected"
+                }
+                else if (isMicrophoneConnected && self.statusItem.title != statusItemTitle) {
+                    self.statusItem.title = self.statusItemTitle
+                }
+                
+                try? await Task.sleep(nanoseconds: 250_000_000)
+            }
+        }
+        
         if clientId == nil || clientId!.isEmpty || clientSecret == nil || clientSecret!.isEmpty {
-            statusItem.title = "Inactive — Missing Settings Values"
+            statusItemTitle = "Inactive — Missing Settings Values"
+            return
+        }
+        
+        if AVCaptureDevice.default(for: .audio) != nil {
+            isMicrophoneConnected = true
+            controller = AudioInputController()
         }
         
         let rpc = RPC(clientId: clientId!, clientSecret: clientSecret!)
@@ -33,7 +57,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NSWorkspace.shared.notificationCenter.addObserver(forName: NSWorkspace.didLaunchApplicationNotification, object: nil, queue: nil) { notif in
             if let app = notif.userInfo?[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication {
                 if app.bundleIdentifier == "com.hnc.Discord" {
-                    self.statusItem.title = "Trying to connect..."
+                    self.statusItemTitle = "Trying to connect..."
                     Task {
                         while (true) {
                             do {
@@ -52,26 +76,54 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NSWorkspace.shared.notificationCenter.addObserver(forName: NSWorkspace.didTerminateApplicationNotification, object: nil, queue: nil) { notif in
             if let app = notif.userInfo?[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication {
                 if app.bundleIdentifier == "com.hnc.Discord" {
-                    self.statusItem.title = "Inactive — Discord Not Open"
-                    self.controller.stop()
+                    self.statusItemTitle = "Inactive — Discord Not Open"
+                    self.controller?.stop()
                     self.rpc?.closeSocket()
                 }
             }
         }
         
         if !NSRunningApplication.runningApplications(withBundleIdentifier: "com.hnc.Discord").isEmpty {
-            self.statusItem.title = "Trying to connect..."
+            self.statusItemTitle = "Trying to connect..."
             Task {
                 do {
                     try rpc.connect()
                 }
                 catch {
                     DispatchQueue.main.async {
-                        self.statusItem.title = "Inactive — Can't Connect to Dicord"
+                        self.statusItemTitle = "Inactive — Can't Connect to Dicord"
                     }
                     logger.log("Couldn't establish connection: \(String(describing: error))")
                 }
             }
+        }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(audioCaptureDeviceConnected), name: AVCaptureDevice.wasConnectedNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(audioCaptureDeviceWasDisconnected), name: AVCaptureDevice.wasDisconnectedNotification, object: nil)
+    }
+    
+    @objc func audioCaptureDeviceConnected(notification: Notification) {
+        guard let device = notification.object as? AVCaptureDevice, device.hasMediaType(.audio) else {
+            return
+        }
+        
+        if (isMicrophoneConnected) { return }
+        
+        NSLog("An audio capture device was connected.")
+        isMicrophoneConnected = true
+        controller = AudioInputController()
+    }
+    
+    @objc func audioCaptureDeviceWasDisconnected(notification: Notification) {
+        guard let device = notification.object as? AVCaptureDevice, device.hasMediaType(.audio) else {
+            return
+        }
+        
+        if AVCaptureDevice.default(for: .audio) == nil {
+            NSLog("An audio capture device was disconnected, and none are left.")
+            isMicrophoneConnected = false
+            controller = nil
         }
     }
     
@@ -88,7 +140,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             
             window.styleMask = [.titled, .closable, .miniaturizable]
             window.title = "AirMute — Settings"
-            
             
             window.delegate = windowDelegate
             
@@ -114,7 +165,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func makeMenu() {
         let menu = NSMenu()
-        statusItem = NSMenuItem(title: "Inactive — Discord Not Open", action: nil, keyEquivalent: "")
+        statusItem = NSMenuItem(title: statusItemTitle, action: nil, keyEquivalent: "")
         statusItem.isEnabled = false
         menu.addItem(statusItem)
         
