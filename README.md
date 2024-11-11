@@ -14,7 +14,7 @@ https://gist.github.com/user-attachments/assets/f0c74cca-f60f-4415-9f00-cb6a0c23
 
 ## Requirements
 - A Mac (Intel or Apple Silicon) with macOS 14.0 or higher.
-- A pair of AirPods Pro.
+- A pair of AirPods Pro, AirPods 3 or newer, or AirPods Max.
 - Have the Discord app installed on your Mac. This app doesn't work with the browser version of Discord.
 
 ## Setup
