@@ -31,7 +31,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 if !isMicrophoneConnected && self.statusItem.title != "Inactive — No Microphone Connected" {
                     self.statusItem.title = "Inactive — No Microphone Connected"
                 }
-                else if (isMicrophoneConnected && self.statusItem.title != statusItemTitle) {
+                else if isMicrophoneConnected && self.statusItem.title != statusItemTitle {
                     self.statusItem.title = self.statusItemTitle
                 }
                 
