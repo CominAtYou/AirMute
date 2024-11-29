@@ -18,7 +18,7 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         clientIdTextField.stringValue = UserDefaults.standard.string(forKey: "client_id") ?? ""
         clientSecretTextField.stringValue = UserDefaults.standard.string(forKey: "client_secret") ?? ""
         undeafenOnClickCheckbox.state = !UserDefaults.standard.bool(forKey: "disable_click_to_undeafen") ? .on : .off
-        undeafenOnClickDescriptionLabel.stringValue = !UserDefaults.standard.bool(forKey: "disable_click_to_undeafen") ? "When deafened, clicking the stem will undeafen and unmute you." : "When deafened, clicking the stem will not do anything."
+        undeafenOnClickDescriptionLabel.stringValue = !UserDefaults.standard.bool(forKey: "disable_click_to_undeafen") ? "When deafened, clicking the stem or pressing the digital crown will undeafen and unmute you." : "When deafened, clicking the stem or pressing the digital crown will not do anything."
         
         undeafenOnClickCheckbox.action = #selector(checkboxStateChanged)
         
@@ -39,12 +39,12 @@ class ViewController: NSViewController, NSTextFieldDelegate {
     
     @objc func checkboxStateChanged(_ sender: NSButton) {
         if sender.state == .on {
-            undeafenOnClickDescriptionLabel.stringValue = "When deafened, clicking the stem will undeafen and unmute you."
+            undeafenOnClickDescriptionLabel.stringValue = "When deafened, clicking the stem or pressing the digital crown will undeafen and unmute you."
             
             UserDefaults.standard.setValue(false, forKey: "disable_click_to_undeafen")
         }
         else {
-            undeafenOnClickDescriptionLabel.stringValue = "When deafened, clicking the stem will not do anything."
+            undeafenOnClickDescriptionLabel.stringValue = "When deafened, clicking the stem or pressing the digital crown will not do anything."
             
             UserDefaults.standard.setValue(true, forKey: "disable_click_to_undeafen")
         }
