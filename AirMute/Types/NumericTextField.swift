@@ -20,11 +20,11 @@ class NumericTextField: NSTextField {
     
     override func textDidChange(_ notification: Notification) {
         super.textDidChange(notification)
+        
         if stringValue.isEmpty {
             _value = ""
             self.stringValue = ""
         }
-
         else if try! numericStringRegex.firstMatch(in: stringValue) == nil {
             stringValue = _value
         }
