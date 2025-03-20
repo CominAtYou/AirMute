@@ -7,6 +7,7 @@ class ViewController: NSViewController, NSTextFieldDelegate {
     @IBOutlet weak var undeafenOnClickCheckbox: NSButton!
     @IBOutlet weak var undeafenOnClickDescriptionLabel: NSTextField!
     @IBOutlet weak var versionLabel: NSTextField!
+    @IBOutlet weak var launchOnStartupCheckbox: NSButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,7 +21,10 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         undeafenOnClickCheckbox.state = !UserDefaults.standard.bool(forKey: "disable_click_to_undeafen") ? .on : .off
         undeafenOnClickDescriptionLabel.stringValue = !UserDefaults.standard.bool(forKey: "disable_click_to_undeafen") ? "When deafened, clicking the stem or pressing the digital crown will undeafen and unmute you." : "When deafened, clicking the stem or pressing the digital crown will not do anything."
         
-        undeafenOnClickCheckbox.action = #selector(checkboxStateChanged)
+        launchOnStartupCheckbox.state = UserDefaults.standard.bool(forKey: "launch_on_startup") ? .on : .off
+        
+        undeafenOnClickCheckbox.action = #selector(undeafenOnClickCheckboxStateChanged)
+        launchOnStartupCheckbox.action = #selector(launchOnStartupCheckboxStateChanged)
         
         versionLabel.stringValue = "AirMute \(Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String) (\(Bundle.main.infoDictionary!["CFBundleVersion"] as! String))"
     }
@@ -37,16 +41,33 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         }
     }
     
-    @objc func checkboxStateChanged(_ sender: NSButton) {
+    @objc func undeafenOnClickCheckboxStateChanged(_ sender: NSButton) {
+        let isClickToDeafenDisabled = sender.state == .off
+        
+        UserDefaults.standard.set(isClickToDeafenDisabled, forKey: "disable_click_to_undeafen")
+        undeafenOnClickDescriptionLabel.stringValue = isClickToDeafenDisabled ? "When deafened, clicking the stem or pressing the digital crown will not do anything." : "When deafened, clicking the stem or pressing the digital crown will undeafen and unmute you."
+    }
+    
+    @objc func launchOnStartupCheckboxStateChanged(_ sender: NSButton) {
+        UserDefaults.standard.setValue(sender.state == .on, forKey: "launch_on_startup")
+        
         if sender.state == .on {
-            undeafenOnClickDescriptionLabel.stringValue = "When deafened, clicking the stem or pressing the digital crown will undeafen and unmute you."
+            let plist: NSDictionary = [
+                "Label": "AirMute",
+                "AssociatedBundleIdentifiers": Bundle.main.bundleIdentifier!,
+                "ProgramArguments": ["open", "/Applications/AirMute.app"],
+                "RunAtLoad": true,
+                "AbandonProcessGroup": true
+            ]
             
-            UserDefaults.standard.setValue(false, forKey: "disable_click_to_undeafen")
+            let filePath = FileManager.default.homeDirectoryForCurrentUser.appending(path: "/Library/LaunchAgents/AirMute.plist")
+            if FileManager.default.createFile(atPath: filePath.path(), contents: nil) {
+                try? plist.write(to: filePath)
+            }
         }
         else {
-            undeafenOnClickDescriptionLabel.stringValue = "When deafened, clicking the stem or pressing the digital crown will not do anything."
-            
-            UserDefaults.standard.setValue(true, forKey: "disable_click_to_undeafen")
+            let filePath = FileManager.default.homeDirectoryForCurrentUser.appending(path: "/Library/LaunchAgents/AirMute.plist")
+            try? FileManager.default.removeItem(at: filePath)
         }
     }
     
