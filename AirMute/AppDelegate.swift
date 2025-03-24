@@ -1,6 +1,7 @@
-import Cocoa
+import AppKit
 import AVFAudio
 import Combine
+import SwiftUI
 import AVFoundation
 
 @main
@@ -25,6 +26,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         let clientId = UserDefaults.standard.string(forKey: "client_id")
         let clientSecret = UserDefaults.standard.string(forKey: "client_secret")
+        
+        if UserDefaults.standard.value(forKey: "click_to_deafen") == nil {
+            UserDefaults.standard.set(true, forKey: "click_to_deafen")
+        }
         
         Task {
             while true {
@@ -129,26 +134,29 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     @objc func launchPreferences() {
         let storyboard = NSStoryboard(name: "Main", bundle: nil)
-        if let viewController = storyboard.instantiateController(withIdentifier: "PreferencesViewController") as? ViewController {
-            if (windowDelegate.isOpen) {
-                NSApp.keyWindow?.orderFront(self)
+        if let viewController = storyboard.instantiateController(withIdentifier: "PreferencesHostingController") as? NSHostingController<SettingsView> {
+            guard !windowDelegate.isOpen else {
                 NSApp.activate()
+                NSApp.keyWindow?.orderFrontRegardless()
                 return
             }
             
             let window = NSWindow(contentViewController: viewController)
             
-            window.styleMask = [.titled, .closable, .miniaturizable]
+            window.styleMask = [.titled, .closable]
             window.title = "AirMute — Settings"
+            window.setContentSize(.init(width: 550, height: 375))
+            window.center()
             
             window.delegate = windowDelegate
             
             let windowController = NSWindowController(window: window)
             windowController.showWindow(self)
             windowDelegate.isOpen = true
-            windowController.window?.makeKey()
+            windowController.window!.makeKey()
             NSApp.activate()
-            windowController.window?.orderFrontRegardless()
+            NSApp.keyWindow?.orderFrontRegardless()
+            return
         }
     }
     

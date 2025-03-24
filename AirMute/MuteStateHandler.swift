@@ -13,7 +13,7 @@ extension AppDelegate {
             if voiceSettings.data.deaf {
                 if isMuted { return true }
                 
-                if !UserDefaults.standard.bool(forKey: "disable_click_to_undeafen") {
+                if UserDefaults.standard.bool(forKey: "click_to_undeafen") {
                     do {
                         try rpc.setMicMuted(isMuted)
                         return true

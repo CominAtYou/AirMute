@@ -34,6 +34,9 @@
 		3E1D91B52C79388E00331448 /* RequestAuthorize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1D91B02C79388E00331448 /* RequestAuthorize.swift */; };
 		3E1D91B62C79388E00331448 /* RequestAuthenticate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1D91B12C79388E00331448 /* RequestAuthenticate.swift */; };
 		3E1D91B72C79388E00331448 /* RequestUnsubscribe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1D91B22C79388E00331448 /* RequestUnsubscribe.swift */; };
+		3E24AEF62D9109AD006E8C14 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E24AEF42D9109AD006E8C14 /* Main.storyboard */; };
+		3E24AEF92D910BDF006E8C14 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E24AEF82D910BDD006E8C14 /* ViewController.swift */; };
+		3E24AEFB2D911156006E8C14 /* SettingsViewInteractionHandlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E24AEFA2D91114A006E8C14 /* SettingsViewInteractionHandlers.swift */; };
 		3E2AE76B2C7A2C540003D244 /* EventVoiceConnectionStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2AE76A2C7A2C540003D244 /* EventVoiceConnectionStatus.swift */; };
 		3E2AE76D2C7A309C0003D244 /* MuteStateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2AE76C2C7A309C0003D244 /* MuteStateHandler.swift */; };
 		3E45C9C72C7939AB000750ED /* RequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E45C9C62C7939AB000750ED /* RequestError.swift */; };
@@ -42,9 +45,8 @@
 		3E45C9EA2C7942A3000750ED /* AudioInputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E45C9E92C7942A3000750ED /* AudioInputController.swift */; };
 		3E45C9EC2C794CC1000750ED /* Controls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E45C9EB2C794CC1000750ED /* Controls.swift */; };
 		3E45C9EF2C7993A5000750ED /* AuthenticationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E45C9EE2C7993A5000750ED /* AuthenticationController.swift */; };
-		3E8D370E2C799C91008C4EB7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E8D370C2C799C91008C4EB7 /* Main.storyboard */; };
+		3E5888AA2D9100A600566F27 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5888A92D9100A000566F27 /* SettingsView.swift */; };
 		3E9ED3462C78F18B00FB4370 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9ED3452C78F18B00FB4370 /* AppDelegate.swift */; };
-		3E9ED3482C78F18B00FB4370 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9ED3472C78F18B00FB4370 /* ViewController.swift */; };
 		3E9ED34A2C78F18C00FB4370 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E9ED3492C78F18C00FB4370 /* Assets.xcassets */; };
 		3EA87ACB2D8BE109007CBB90 /* Socket in Frameworks */ = {isa = PBXBuildFile; productRef = 3EA87ACA2D8BE109007CBB90 /* Socket */; };
 		3EAC48582C7A92AF00B03795 /* PreferencesWindowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAC48572C7A92AF00B03795 /* PreferencesWindowDelegate.swift */; };
@@ -79,6 +81,9 @@
 		3E1D91B02C79388E00331448 /* RequestAuthorize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestAuthorize.swift; sourceTree = "<group>"; };
 		3E1D91B12C79388E00331448 /* RequestAuthenticate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestAuthenticate.swift; sourceTree = "<group>"; };
 		3E1D91B22C79388E00331448 /* RequestUnsubscribe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestUnsubscribe.swift; sourceTree = "<group>"; };
+		3E24AEF52D9109AD006E8C14 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		3E24AEF82D910BDD006E8C14 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		3E24AEFA2D91114A006E8C14 /* SettingsViewInteractionHandlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewInteractionHandlers.swift; sourceTree = "<group>"; };
 		3E2AE76A2C7A2C540003D244 /* EventVoiceConnectionStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventVoiceConnectionStatus.swift; sourceTree = "<group>"; };
 		3E2AE76C2C7A309C0003D244 /* MuteStateHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuteStateHandler.swift; sourceTree = "<group>"; };
 		3E45C9C62C7939AB000750ED /* RequestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestError.swift; sourceTree = "<group>"; };
@@ -86,12 +91,11 @@
 		3E45C9CB2C793A7F000750ED /* RPCToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPCToken.swift; sourceTree = "<group>"; };
 		3E45C9E92C7942A3000750ED /* AudioInputController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioInputController.swift; sourceTree = "<group>"; };
 		3E45C9EB2C794CC1000750ED /* Controls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Controls.swift; sourceTree = "<group>"; };
-		3E45C9ED2C7959A7000750ED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		3E45C9ED2C7959A7000750ED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3E45C9EE2C7993A5000750ED /* AuthenticationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationController.swift; sourceTree = "<group>"; };
-		3E8D370D2C799C91008C4EB7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		3E5888A92D9100A000566F27 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		3E9ED3422C78F18B00FB4370 /* AirMute.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AirMute.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E9ED3452C78F18B00FB4370 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3E9ED3472C78F18B00FB4370 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		3E9ED3492C78F18C00FB4370 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3E9ED34E2C78F18C00FB4370 /* AirMute.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AirMute.entitlements; sourceTree = "<group>"; };
 		3EAC48572C7A92AF00B03795 /* PreferencesWindowDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindowDelegate.swift; sourceTree = "<group>"; };
@@ -225,17 +229,19 @@
 			children = (
 				3E1D91622C7914CC00331448 /* RPC */,
 				3E1855C12C78FDDD001861B4 /* Types */,
-				3E45C9E92C7942A3000750ED /* AudioInputController.swift */,
-				3E45C9EE2C7993A5000750ED /* AuthenticationController.swift */,
-				3E9ED3452C78F18B00FB4370 /* AppDelegate.swift */,
-				3E9ED3472C78F18B00FB4370 /* ViewController.swift */,
-				3E2AE76C2C7A309C0003D244 /* MuteStateHandler.swift */,
-				3EC4C95A2C7BF41B00DD4AEF /* RPCEvents.swift */,
 				3E9ED3492C78F18C00FB4370 /* Assets.xcassets */,
 				3E9ED34E2C78F18C00FB4370 /* AirMute.entitlements */,
-				3E8D370C2C799C91008C4EB7 /* Main.storyboard */,
-				3E45C9EB2C794CC1000750ED /* Controls.swift */,
 				3E45C9ED2C7959A7000750ED /* Info.plist */,
+				3E24AEF42D9109AD006E8C14 /* Main.storyboard */,
+				3E9ED3452C78F18B00FB4370 /* AppDelegate.swift */,
+				3E45C9E92C7942A3000750ED /* AudioInputController.swift */,
+				3E45C9EE2C7993A5000750ED /* AuthenticationController.swift */,
+				3E45C9EB2C794CC1000750ED /* Controls.swift */,
+				3E2AE76C2C7A309C0003D244 /* MuteStateHandler.swift */,
+				3EC4C95A2C7BF41B00DD4AEF /* RPCEvents.swift */,
+				3E5888A92D9100A000566F27 /* SettingsView.swift */,
+				3E24AEFA2D91114A006E8C14 /* SettingsViewInteractionHandlers.swift */,
+				3E24AEF82D910BDD006E8C14 /* ViewController.swift */,
 			);
 			path = AirMute;
 			sourceTree = "<group>";
@@ -271,7 +277,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1540;
-				LastUpgradeCheck = 1540;
+				LastUpgradeCheck = 1620;
 				TargetAttributes = {
 					3E9ED3412C78F18B00FB4370 = {
 						CreatedOnToolsVersion = 15.4;
@@ -305,7 +311,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E9ED34A2C78F18C00FB4370 /* Assets.xcassets in Resources */,
-				3E8D370E2C799C91008C4EB7 /* Main.storyboard in Resources */,
+				3E24AEF62D9109AD006E8C14 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,12 +324,12 @@
 			files = (
 				3E1D91B32C79388E00331448 /* RequestSubscribe.swift in Sources */,
 				3E1D91AA2C79387400331448 /* ResponseUnsubscribe.swift in Sources */,
-				3E9ED3482C78F18B00FB4370 /* ViewController.swift in Sources */,
 				3E1D91B42C79388E00331448 /* RequestHandshake.swift in Sources */,
 				3E9ED3462C78F18B00FB4370 /* AppDelegate.swift in Sources */,
 				3E1D919F2C79238D00331448 /* NonceError.swift in Sources */,
 				3E1D91942C7921E800331448 /* EventClose.swift in Sources */,
 				3E1D91B62C79388E00331448 /* RequestAuthenticate.swift in Sources */,
+				3E24AEF92D910BDF006E8C14 /* ViewController.swift in Sources */,
 				3E45C9CA2C793A66000750ED /* AccessToken.swift in Sources */,
 				3EC4C95B2C7BF41B00DD4AEF /* RPCEvents.swift in Sources */,
 				3E1D91832C791F5900331448 /* Coding.swift in Sources */,
@@ -332,6 +338,7 @@
 				3E1D91A12C7925AA00331448 /* HTTPError.swift in Sources */,
 				3E1D91B52C79388E00331448 /* RequestAuthorize.swift in Sources */,
 				3E45C9EC2C794CC1000750ED /* Controls.swift in Sources */,
+				3E24AEFB2D911156006E8C14 /* SettingsViewInteractionHandlers.swift in Sources */,
 				3E45C9CC2C793A7F000750ED /* RPCToken.swift in Sources */,
 				3E1D91892C79215E00331448 /* Utils.swift in Sources */,
 				3E1D91AB2C79387400331448 /* ResponseSubscribe.swift in Sources */,
@@ -341,6 +348,7 @@
 				3E1D91852C791F9F00331448 /* Socket.swift in Sources */,
 				3E45C9EA2C7942A3000750ED /* AudioInputController.swift in Sources */,
 				3E1D919D2C79225E00331448 /* CommandError.swift in Sources */,
+				3E5888AA2D9100A600566F27 /* SettingsView.swift in Sources */,
 				3E1D916C2C7919E100331448 /* RPCError.swift in Sources */,
 				3EAC48582C7A92AF00B03795 /* PreferencesWindowDelegate.swift in Sources */,
 				3E1D91692C79160300331448 /* Constants.swift in Sources */,
@@ -361,10 +369,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		3E8D370C2C799C91008C4EB7 /* Main.storyboard */ = {
+		3E24AEF42D9109AD006E8C14 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				3E8D370D2C799C91008C4EB7 /* Base */,
+				3E24AEF52D9109AD006E8C14 /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -406,6 +414,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -469,6 +478,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -498,7 +508,8 @@
 				CODE_SIGN_ENTITLEMENTS = AirMute/AirMute.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 9;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 839U72R654;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -512,7 +523,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.1.1;
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cominatyou.AirMute;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -528,7 +539,8 @@
 				CODE_SIGN_ENTITLEMENTS = AirMute/AirMute.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 9;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 839U72R654;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -542,7 +554,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.1.1;
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cominatyou.AirMute;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
