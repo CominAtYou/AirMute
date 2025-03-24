@@ -143,11 +143,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             
             window.delegate = windowDelegate
             
-            let controller = NSWindowController(window: window)
-            controller.showWindow(self)
+            let windowController = NSWindowController(window: window)
+            windowController.showWindow(self)
             windowDelegate.isOpen = true
-            controller.window?.makeKeyAndOrderFront(self)
+            windowController.window?.makeKey()
             NSApp.activate()
+            windowController.window?.orderFrontRegardless()
         }
     }
     
