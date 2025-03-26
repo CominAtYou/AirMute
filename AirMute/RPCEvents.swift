@@ -7,6 +7,7 @@ extension AppDelegate {
             do {
                 let authentication = try rpcParam.authenticateOverRPC()
                 
+                rpc.user = authentication.data.user
                 NSLog("Connected to @\(authentication.data.user.username)!")
                 
                 self.statusItemTitle = "Inactive — Not in Voice"

@@ -145,7 +145,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             
             window.styleMask = [.titled, .closable]
             window.title = "AirMute — Settings"
-            window.setContentSize(.init(width: 550, height: 375))
+            window.setContentSize(.init(width: 550, height: 380))
             window.center()
             
             window.delegate = windowDelegate

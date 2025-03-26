@@ -5,18 +5,54 @@ struct SettingsView: View {
     @AppStorage("client_secret") private var clientSecret = ""
     @AppStorage("click_to_undeafen") private var clickToUndeafen = true
     @AppStorage("launch_on_startup") private var launchOnStartup = false
+    @FocusState private var focusState: FocusedField?
     
     var body: some View {
         VStack {
             Form {
+                if let user = (NSApplication.shared.delegate as! AppDelegate).rpc?.user {
+                    Section {
+                        HStack {
+                            if let avatar = user.avatar {
+                                let url = URL(string: "https://cdn.discordapp.com/avatars/\(user.id)/\(avatar).png?size=256")!
+                                
+                                AsyncImage(url: url) {
+                                    $0.resizable()
+                                        .clipShape(Circle())
+                                        .frame(width: 30, height: 30)
+                                } placeholder: {
+                                    Image(systemName: "person.crop.circle.fill")
+                                        .font(.system(size: 30))
+                                        .frame(width: 30, height: 30)
+                                }
+                            }
+                            else {
+                                Image(systemName: "person.crop.circle.fill")
+                                    .font(.system(size: 30))
+                                    .frame(width: 30, height: 30)
+                            }
+                            
+                            VStack(alignment: .leading) {
+                                Text(user.globalName)
+                                    .fontWeight(.semibold)
+                                Text("@" + user.username)
+                                    .font(.system(size: 11.5))
+                                    .opacity(0.5)
+                            }
+                        }
+                    }
+                }
+                
                 Section {
                     TextField(text: $clientId) {
                         Text("Client ID")
                     }
+                    .focused($focusState, equals: .id)
                     
                     TextField(text: $clientSecret) {
                         Text("Client Secret")
                     }
+                    .focused($focusState, equals: .secret)
                 } footer: {
                     HStack {
                         VStack(alignment: .leading, spacing: 2) {
@@ -60,8 +96,10 @@ struct SettingsView: View {
                 
             }
             .formStyle(.grouped)
+            .scrollDisabled(true)
             
             Spacer()
+            
             Text("AirMute \(Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String) (\(Bundle.main.infoDictionary!["CFBundleVersion"] as! String))")
                 .padding(.bottom, 12)
                 .foregroundStyle(Color(nsColor: .tertiaryLabelColor))
@@ -70,7 +108,17 @@ struct SettingsView: View {
         .onChange(of: launchOnStartup) {
             launchOnStartupStateChanged(to: launchOnStartup)
         }
+        .onAppear {
+            // Wrangling the default SwiftUI focus
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.001) {
+                focusState = nil
+            }
+        }
     }
+}
+
+fileprivate enum FocusedField {
+    case id, secret, dud
 }
 
 #Preview {

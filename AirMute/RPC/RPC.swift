@@ -7,6 +7,8 @@ class RPC {
     internal var socket: Socket?
     let clientId: String
     let clientSecret: String
+    var user: User? = nil
+    
     internal let rpcWorker: DispatchQueue
     internal let handlerWorker: DispatchQueue
     
