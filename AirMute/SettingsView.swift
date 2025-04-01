@@ -53,38 +53,33 @@ struct SettingsView: View {
                         Text("Client Secret")
                     }
                     .focused($focusState, equals: .secret)
-                } footer: {
-                    HStack {
-                        VStack(alignment: .leading, spacing: 2) {
-                            if #available(macOS 15, *) {
-                                HStack(spacing: 1) {
-                                    Text("You can obtain a Client ID and secret from the ")
-                                    Text("[Discord Developer Portal](https://discord.com/developers/applications).")
-                                        .pointerStyle(.link)
-                                }
+                    
+                    VStack(alignment: .leading) {
+                        if #available(macOS 15, *) {
+                            HStack(spacing: 1) {
+                                Text("You can obtain a Client ID and secret from the ")
+                                Text("[Discord Developer Portal](https://discord.com/developers/applications).")
+                                    .pointerStyle(.link)
                             }
-                            else {
-                                Text("You can obtain a Client ID and secret from the [Discord Developer Portal](https://discord.com/developers/applications).")
-                            }
-                            
-                            Text("Changes to the above values will require you to relaunch the app.")
                         }
-                        .multilineTextAlignment(.leading)
-                        .font(.system(size: 11.5))
-                        .foregroundStyle(Color(nsColor: .secondaryLabelColor))
-                        Spacer()
+                        else {
+                            Text("You can obtain a Client ID and secret from the [Discord Developer Portal](https://discord.com/developers/applications).")
+                        }
+                        
+                        Text("Changes to the above values will require you to relaunch the app.")
                     }
-                    .frame(idealWidth: .infinity, maxWidth: .infinity)
-                    .padding(.leading, 11)
+                    .multilineTextAlignment(.leading)
+                    .font(.system(size: 10.5))
+                    .foregroundStyle(.secondary)
                 }
                 
                 Section {
                     Toggle(isOn: $clickToUndeafen) {
                         VStack(alignment: .leading, spacing: 2.5) {
                             Text("Click to Undeafen")
-                            Text(clickToUndeafen ? "When deafened, clicking the stem or pressing the digital crown will undeafen and unmute you." : "When deafened, clicking the stem or pressing the digital crown will not do anything." )
+                            Text(clickToUndeafen ? "When deafened, clicking the stem or pressing the digital crown will undeafen and unmute you." : "When deafened, clicking the stem or pressing the digital crown will not do anything.")
                                 .font(.system(size: 10.5))
-                                .opacity(0.5)
+                                .foregroundStyle(.secondary)
                             
                         }
                     }
