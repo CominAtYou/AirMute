@@ -44,14 +44,14 @@ Basically:
 ### How do I see the current status of the app?
 Clicking the app's menu bar icon will yield a menu that'll tell you if the app is active or not (the app is only active when you're in voice), and will also let you know why the app is inactive, or of any errors that might have occured.
 
-### What does "Click stem to undeafen" in the app's settings do?
-Enabling this setting will let you undeafen yourself by clicking the stem on your AirPods whilst deafened. Turning it off will prevent you from being undeafened when clicking the stem, but it won't unmute you either.
+### What does "Click to Undeafen" in the app's settings do?
+Enabling this setting will let you undeafen yourself by clicking the stem or Digital Crown on your AirPods whilst deafened. Turning it off will prevent you from being undeafened when clicking the stem or Digital Crown, but it won't unmute you either.
 
 ### Why do I sometimes have to re-authorize the app in Discord?
 Discord requires apps that haven't been approved to re-request authorization from you every seven days. There's nothing that can be done about this, unfortunately. Sorry!
 
 ### The settings window doesn't show up.
-The settings window sometimes like to show up behind other windows. Minimize all of the windows you've got open to locate it, or use Mission Control to find it.
+The settings window sometimes likes to show up behind other windows. Minimize all of the windows you've got open to locate it, or use Mission Control to find it.
 
 ## Something not working?
 ### Check the status menu first!
