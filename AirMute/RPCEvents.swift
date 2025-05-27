@@ -8,7 +8,7 @@ extension AppDelegate {
                 let authentication = try rpcParam.authenticateOverRPC()
                 
                 rpc.user = authentication.data.user
-                NSLog("Connected to @\(authentication.data.user.username)!")
+                logger.info("Connected to @\(authentication.data.user.username)!")
                 
                 self.statusItemTitle = "Inactive — Not in Voice"
                 
@@ -25,6 +25,7 @@ extension AppDelegate {
             catch HTTPError.failed(let code, let error) {
                 if (code == 401) {
                     self.statusItemTitle = "Error — Invalid Client Secret"
+                    logger.error("Failed to connect - client secret is invalid")
                     rpc.closeSocket()
                 }
                 else {
@@ -35,6 +36,7 @@ extension AppDelegate {
             catch CommandError.failed(let code, let errorMessage) {
                 if code == .oAuth2Error {
                     self.statusItemTitle = "Error — Couldn't Obtain Authorization"
+                    logger.error("Failed to connect - couldn't obtain authorization")
                 }
                 else {
                     self.statusItemTitle = "Error — Command Failed"
@@ -71,9 +73,12 @@ extension AppDelegate {
             switch event.code {
             case .invalidClientID:
                 self.statusItemTitle = "Error — Invalid Client ID"
+                logger.error("Failed to connect - Invalid Client ID: \(event.message)")
             case .invalidOrigin:
                 self.statusItemTitle = "Error — Invalid RPC Origin"
+                logger.error("Failed to connect - Invalid RPC Origin: \(event.message)")
             case .socketDisconnected:
+                logger.error("Failed to connect - socket died")
                 break
             default:
                 self.statusItemTitle = "Error — Unable to Connect"

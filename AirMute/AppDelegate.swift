@@ -24,11 +24,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         makeMenu()
         
-        let clientId = UserDefaults.standard.string(forKey: "client_id")
-        let clientSecret = UserDefaults.standard.string(forKey: "client_secret")
+        let clientId = UserDefaults.standard.string(forKey: "client_id")?.trimmingCharacters(in: .whitespacesAndNewlines)
+        let clientSecret = UserDefaults.standard.string(forKey: "client_secret")?.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        if clientId == nil || clientId!.isEmpty || clientSecret == nil || clientSecret!.isEmpty {
+            statusItemTitle = "Inactive — Missing Settings Values"
+            logger.error("Missing settings values.")
+            return
+        }
         
         if UserDefaults.standard.value(forKey: "click_to_deafen") == nil {
             UserDefaults.standard.set(true, forKey: "click_to_deafen")
+        }
+        
+        if AVCaptureDevice.default(for: .audio) != nil {
+            isMicrophoneConnected = true
+            controller = AudioInputController()
         }
         
         Task {
@@ -44,16 +55,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
         }
         
-        if clientId == nil || clientId!.isEmpty || clientSecret == nil || clientSecret!.isEmpty {
-            statusItemTitle = "Inactive — Missing Settings Values"
-            return
-        }
-        
-        if AVCaptureDevice.default(for: .audio) != nil {
-            isMicrophoneConnected = true
-            controller = AudioInputController()
-        }
-        
         let rpc = RPC(clientId: clientId!, clientSecret: clientSecret!)
         self.rpc = rpc
 
@@ -63,6 +64,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             if let app = notif.userInfo?[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication {
                 if app.bundleIdentifier == "com.hnc.Discord" {
                     self.statusItemTitle = "Trying to connect..."
+                    logger.info("Discord is open.")
                     Task {
                         while (true) {
                             do {
@@ -70,6 +72,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                                 break
                             }
                             catch {
+                                logger.error("Connection process threw an exception: \(String(describing: error))")
                                 try? await Task.sleep(nanoseconds: 5_000_000_000)
                             }
                         }
@@ -98,7 +101,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     DispatchQueue.main.async {
                         self.statusItemTitle = "Inactive — Can't Connect to Dicord"
                     }
-                    logger.log("Couldn't establish connection: \(String(describing: error))")
+                    logger.info("Couldn't establish connection: \(String(describing: error))")
                 }
             }
         }
@@ -115,7 +118,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         if (isMicrophoneConnected) { return }
         
-        NSLog("An audio capture device was connected.")
+        logger.info("An audio capture device was connected.")
         isMicrophoneConnected = true
         controller = AudioInputController()
     }
@@ -126,7 +129,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         
         if AVCaptureDevice.default(for: .audio) == nil {
-            NSLog("An audio capture device was disconnected, and none are left.")
+            logger.info("An audio capture device was disconnected, and none are left.")
             isMicrophoneConnected = false
             controller = nil
         }

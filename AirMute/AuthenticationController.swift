@@ -4,13 +4,13 @@ extension RPC {
     func authenticateOverRPC() throws -> ResponseAuthenticate {
         if let tokenExpiry = UserDefaults.standard.object(forKey: "token_expiry") as? Date, tokenExpiry > Date() {
             if let accessTokenData = UserDefaults.standard.data(forKey: "access_token") {
-                NSLog("Loaded cached credentials")
+                logger.info("Loaded cached credentials")
                 let accessToken = try AccessToken.from(data: accessTokenData)
                 return try authenticate(accessToken: accessToken.accessToken)
             }
         }
         
-        NSLog("Credentials expired, reauthenticating...")
+        logger.info("Credentials expired, reauthenticating...")
         
         let authorization = try authorize(oAuth2Scopes: [.rpc, .rpcVoiceRead, .rpcVoiceWrite, .identify])
         let accessToken = try fetchAccessToken(code: authorization.data.code, redirectURI: "http://localhost")

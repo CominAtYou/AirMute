@@ -18,9 +18,9 @@ public class User: Codable {
     public let locale: String?
     public let verified: Bool?
     public let email: String?
-    public let flags: UserFlag?
+    public let flags: Int?
     public let premiumType: PremiumType?
-    public let publicFlags: UserFlag?
+    public let publicFlags: Int?
 
     private enum CodingKeys: String, CodingKey {
         case id

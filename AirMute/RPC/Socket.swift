@@ -19,6 +19,7 @@ extension RPC {
     func handshake() throws {
         let request = try RequestHandshake(clientID: self.clientId)
         let requestJSON = try request.jsonString()
+        logger.info("Kicking off handshake with JSON: \(requestJSON)")
 
         try self.send(requestJSON, .handshake)
         self.receive()
@@ -29,13 +30,15 @@ extension RPC {
             throw RPCError.appSandboxed
         }
         try self.createSocket()
+        logger.info("Created socket.")
 
         let path = NSTemporaryDirectory()
         for suffix in udsSuffixRange {
-            try? self.socket!.connect(to: "\(path)/discord-ipc-\(suffix)")
+            try? self.socket!.connect(to: "\(path)discord-ipc-\(suffix)")
 
             guard !self.socket!.isConnected else {
                 do {
+                    logger.info("Connected to socket at \(path)discord-ipc-\(suffix)")
                     try self.handshake()
                     return
                 } catch {
@@ -244,7 +247,7 @@ extension RPC {
             }
         } catch {
             logger.error("""
-                HandleEvent: failed with error: \(error.localizedDescription); \
+                HandleEvent: failed with error: \(String(describing: error)); \
                 and data: \(String(data: data, encoding: .utf8) ?? "nil")
             """)
             
